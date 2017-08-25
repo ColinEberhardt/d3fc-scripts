@@ -23,41 +23,41 @@ const root = (pathname) => path.resolve(process.cwd(), pathname);
 // ====
 // REQUIRED FILES CHECK
 // ====
-const globOptions = {
-    cwd: required(),
-    dot: true
-};
-
-try {
-    const files = glob.sync('*', globOptions);
-    const results = files.map(filename => {
-        try {
-            const candidateContents = eol.lf(fs.readFileSync(root(filename), 'utf8'));
-            const requiredContents = eol.lf(fs.readFileSync(required(filename), 'utf8'));
-
-            if (candidateContents !== requiredContents) {
-                console.log(filename, '\t\t', 'INCORRECT CONTENTS');
-                return false;
-            }
-            console.log(filename, '\t\t', 'OK');
-            return true;
-        } catch (e) {
-            console.log(filename, '\t\t', 'NO FILE');
-            return false;
-        }
-    });
-
-    const passed = results.every(r => r === true);
-    const numberPassed = results.filter(r => r === true).length;
-    console.log(`\n${numberPassed}/${files.length} required files OK\n`);
-
-    if (!passed) {
-        throw new Error('Required files are not correct - check https://github.com/d3fc/d3fc-scripts/required');
-    }
-} catch (err) {
-    console.log('Required files check failed - ', err);
-    process.exit(1);
-}
+// const globOptions = {
+//     cwd: required(),
+//     dot: true
+// };
+//
+// try {
+//     const files = glob.sync('*', globOptions);
+//     const results = files.map(filename => {
+//         try {
+//             const candidateContents = eol.lf(fs.readFileSync(root(filename), 'utf8'));
+//             const requiredContents = eol.lf(fs.readFileSync(required(filename), 'utf8'));
+//
+//             if (candidateContents !== requiredContents) {
+//                 console.log(filename, '\t\t', 'INCORRECT CONTENTS');
+//                 return false;
+//             }
+//             console.log(filename, '\t\t', 'OK');
+//             return true;
+//         } catch (e) {
+//             console.log(filename, '\t\t', 'NO FILE');
+//             return false;
+//         }
+//     });
+//
+//     const passed = results.every(r => r === true);
+//     const numberPassed = results.filter(r => r === true).length;
+//     console.log(`\n${numberPassed}/${files.length} required files OK\n`);
+//
+//     if (!passed) {
+//         throw new Error('Required files are not correct - check https://github.com/d3fc/d3fc-scripts/required');
+//     }
+// } catch (err) {
+//     console.log('Required files check failed - ', err);
+//     process.exit(1);
+// }
 
 // ====
 // TESTS
